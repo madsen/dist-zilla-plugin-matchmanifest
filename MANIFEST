@@ -1,0 +1,9 @@
+Changes
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+lib/Dist/Zilla/Plugin/MatchManifest.pm
+t/release-pod-coverage.t
+t/release-pod-syntax.t
