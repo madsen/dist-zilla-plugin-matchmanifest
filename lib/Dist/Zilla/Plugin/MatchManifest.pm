@@ -22,9 +22,9 @@ our $VERSION = '0.01';
 =head1 DESCRIPTION
 
 If included, this plugin will ensure that the distribution contains a
-F<MANIFEST> file and that its contents match the distribution.  If
-not, it will display the differences and (if STDIN & STDOUT are TTYs)
-offer to update the F<MANIFEST>.
+F<MANIFEST> file and that its contents match the files collected by
+Dist::Zilla.  If not, it will display the differences and (if STDIN &
+STDOUT are TTYs) offer to update the F<MANIFEST>.
 
 As I see it, there are 2 problems that a MANIFEST can protect against:
 
