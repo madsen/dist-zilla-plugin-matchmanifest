@@ -1,4 +1,7 @@
-Revision history for Dist-Zilla-PluginBundle-CJM
+Revision history for Dist-Zilla-Plugin-MatchManifest
+
+0.02   March 7, 2010
+	- Use the plugin's log method so the plugin name appears in the log
 
 0.01   October 20, 2009
 	- Initial release

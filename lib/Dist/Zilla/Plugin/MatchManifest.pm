@@ -17,7 +17,8 @@ package Dist::Zilla::Plugin::MatchManifest;
 # ABSTRACT: Ensure that MANIFEST is correct
 #---------------------------------------------------------------------
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
+# This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 =head1 DESCRIPTION
 
@@ -82,19 +83,22 @@ sub setup_installer {
   my $stat   = $onDisk->stat;
 
   my $diff = Text::Diff::diff(\$manifestFile->content, \$manifest, {
-    qw(FILENAME_A MANIFEST  FILENAME_B MANIFEST  CONTEXT 0),
+    FILENAME_A => 'MANIFEST (on disk)       ',
+    FILENAME_B => 'MANIFEST (auto-generated)',
+    CONTEXT    => 0,
     MTIME_A => $stat ? $stat->mtime : 0,
     MTIME_B => time,
   });
 
   $diff =~ s/^\@\@.*\n//mg;     # Don't care about line numbers
 
-  $self->zilla->log($diff);
+  $self->log("MANIFEST does not match the collected files!\n$diff");
 
   # See if the author wants to accept the new MANIFEST:
-  die "Can't prompt about MANIFEST mismatch\n" unless -t STDIN and -t STDOUT;
+  $self->log_fatal("Can't prompt about MANIFEST mismatch\n")
+      unless -t STDIN and -t STDOUT;
 
-  die "Aborted because of MANIFEST mismatch\n"
+  $self->log_fatal("Aborted because of MANIFEST mismatch\n")
       unless $self->ask_yn("Update MANIFEST");
 
   # Update the MANIFEST in the distribution:
@@ -104,6 +108,8 @@ sub setup_installer {
   open(my $out, '>', $onDisk);
   print $out $manifest;
   close $out;
+
+  $self->log_debug("Updated MANIFEST");
 } # end setup_installer
 
 #---------------------------------------------------------------------
