@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-MatchManifest
 
-0.03   NOT
+0.03   April 14, 2010
 	- Added SYNOPSIS
 	- Made the MANIFEST diff less likely to wrap
 	- Added compile test
