@@ -2,6 +2,7 @@ Revision history for Dist-Zilla-Plugin-MatchManifest
 
 0.03   NOT
 	- Added SYNOPSIS
+	- Made the MANIFEST diff less likely to wrap
 
 0.02   March 7, 2010
 	- Use the plugin's log method so the plugin name appears in the log

@@ -95,14 +95,16 @@ sub setup_installer {
   });
 
   $diff =~ s/^\@\@.*\n//mg;     # Don't care about line numbers
+  chomp $diff;
 
-  $self->log("MANIFEST does not match the collected files!\n$diff");
+  $self->log("MANIFEST does not match the collected files!");
+  $self->zilla->chrome->logger->log($diff); # No prefix
 
   # See if the author wants to accept the new MANIFEST:
-  $self->log_fatal("Can't prompt about MANIFEST mismatch\n")
+  $self->log_fatal("Can't prompt about MANIFEST mismatch")
       unless -t STDIN and -t STDOUT;
 
-  $self->log_fatal("Aborted because of MANIFEST mismatch\n")
+  $self->log_fatal("Aborted because of MANIFEST mismatch")
       unless $self->ask_yn("Update MANIFEST");
 
   # Update the MANIFEST in the distribution:
