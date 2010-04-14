@@ -17,8 +17,12 @@ package Dist::Zilla::Plugin::MatchManifest;
 # ABSTRACT: Ensure that MANIFEST is correct
 #---------------------------------------------------------------------
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
+
+=head1 SYNOPSIS
+
+  [MatchManifest]
 
 =head1 DESCRIPTION
 
