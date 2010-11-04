@@ -17,7 +17,7 @@ package Dist::Zilla::Plugin::MatchManifest;
 # ABSTRACT: Ensure that MANIFEST is correct
 #---------------------------------------------------------------------
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 =head1 SYNOPSIS
@@ -76,7 +76,13 @@ sub setup_installer {
   } # end unless distribution already contained MANIFEST
 
   # List the files actually in the distribution:
-  my $manifest = $files->map(sub{$_->name})->sort->join("\n") . "\n";
+  my $manifest = $files->map(sub {
+    my $name = $_->name;
+    return $name unless $name =~ /[ '\\]/;
+    $name =~ s/\\/\\\\/g;
+    $name =~ s/'/\\'/g;
+    return qq{'$name'};
+  })->sort->join("\n") . "\n";
 
   return if $manifest eq $manifestFile->content;
 
