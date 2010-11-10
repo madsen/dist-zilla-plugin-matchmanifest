@@ -28,8 +28,8 @@ our $VERSION = '0.04';
 
 If included, this plugin will ensure that the distribution contains a
 F<MANIFEST> file and that its contents match the files collected by
-Dist::Zilla.  If not, it will display the differences and (if STDIN &
-STDOUT are TTYs) offer to update the F<MANIFEST>.
+Dist::Zilla.  If not, it will display the differences and offer to
+update the F<MANIFEST>.
 
 As I see it, there are 2 problems that a MANIFEST can protect against:
 
@@ -107,11 +107,9 @@ sub setup_installer {
   $self->zilla->chrome->logger->log($diff); # No prefix
 
   # See if the author wants to accept the new MANIFEST:
-  $self->log_fatal("Can't prompt about MANIFEST mismatch")
-      unless -t STDIN and -t STDOUT;
-
   $self->log_fatal("Aborted because of MANIFEST mismatch")
-      unless $self->ask_yn("Update MANIFEST");
+      unless $self->zilla->chrome->prompt_yn("Update MANIFEST?",
+                                             { default => 0 });
 
   # Update the MANIFEST in the distribution:
   $manifestFile->content($manifest);
@@ -125,23 +123,9 @@ sub setup_installer {
 } # end setup_installer
 
 #---------------------------------------------------------------------
-sub ask_yn
-{
-  my ($self, $prompt) = @_;
-
-  local $| = 1;
-  print "$prompt? (y/n) ";
-
-  my $response = <STDIN>;
-  chomp $response;
-
-  return lc $response eq 'y';
-} # end ask_yn
-
 __PACKAGE__->meta->make_immutable;
 no Moose;
 1;
 
 =for Pod::Coverage
-ask_yn
 setup_installer
