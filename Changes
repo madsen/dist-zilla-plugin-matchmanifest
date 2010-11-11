@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-MatchManifest
 
-0.04   NOT
+0.04   November 11, 2010
 	- Handle spaces and single quotes in filenames
 	- Use the prompt_yn method of dzil's chrome
 	- Now has actual tests
