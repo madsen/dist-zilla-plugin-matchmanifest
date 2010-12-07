@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-Plugin-MatchManifest
 
+4.00   NOT
+	- Write MANIFEST without CRs on Win32
+	- The major version is now 4, because it requires Dist::Zilla 4.
+	  (I meant to make this change with the last release, but forgot.)
+
 0.04   November 11, 2010
 	- Handle spaces and single quotes in filenames
 	- Use the prompt_yn method of dzil's chrome
