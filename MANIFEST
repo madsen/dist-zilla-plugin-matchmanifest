@@ -6,6 +6,7 @@ META.yml
 Makefile.PL
 README
 lib/Dist/Zilla/Plugin/MatchManifest.pm
+t/00-all_prereqs.t
 t/00-compile.t
 t/10-manifest.t
 t/corpus/DZT/MANIFEST.SKIP
