@@ -17,12 +17,13 @@ package Dist::Zilla::Plugin::MatchManifest;
 # ABSTRACT: Ensure that MANIFEST is correct
 #---------------------------------------------------------------------
 
-our $VERSION = '4.00';
+our $VERSION = '4.01';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 =head1 SYNOPSIS
 
   [MatchManifest]
+  require_builder = 1 ; this is the default and should seldom be changed
 
 =head1 DESCRIPTION
 
@@ -49,6 +50,9 @@ By keeping your MANIFEST under source control and using this plugin to
 make sure it's kept up to date, you can protect yourself against both
 problems.
 
+MatchManifest must come after your MakeMaker or ModuleBuild plugin, so
+that it can see any F<Makefile.PL> or F<Build.PL> generated.
+
 =cut
 
 use Moose;
@@ -56,6 +60,24 @@ use Moose::Autobox;
 with 'Dist::Zilla::Role::InstallTool';
 
 use autodie ':io';
+
+=attr require_builder
+
+For safety, MatchManifest aborts if it doesn't see a F<Makefile.PL> or
+F<Build.PL> in your dist.  If C<[MatchManifest]> is listed before
+C<[MakeMaker]> in your F<dist.ini>, then the manifest will be checked
+before F<Makefile.PL> has been added, which is bad.
+
+If you really want to create a dist with no F<Makefile.PL> or
+F<Build.PL>, you can set C<require_builder> to 0 to skip this check.
+
+=cut
+
+has require_builder => (
+    is      => 'ro',
+    isa     => 'Bool',
+    default => 1,
+);
 
 sub setup_installer {
   my ($self, $arg) = @_;
@@ -76,13 +98,25 @@ sub setup_installer {
   } # end unless distribution already contained MANIFEST
 
   # List the files actually in the distribution:
+  my $builder_found;
+
   my $manifest = $files->map(sub {
     my $name = $_->name;
+    ++$builder_found if $name eq 'Makefile.PL' or $name eq 'Build.PL';
     return $name unless $name =~ /[ '\\]/;
     $name =~ s/\\/\\\\/g;
     $name =~ s/'/\\'/g;
     return qq{'$name'};
   })->sort->join("\n") . "\n";
+
+  if (not $builder_found and $self->require_builder) {
+    $self->log_fatal(<<'END ERROR');
+No Makefile.PL or Build.PL found!
+[MatchManifest] must come after [MakeMaker] or [ModuleBuild].
+Otherwise, the files they generate won't be listed in MANIFEST.
+Set require_builder = 0 if you really want a dist with no Makefile.PL.
+END ERROR
+  }
 
   return if $manifest eq $manifestFile->content;
 

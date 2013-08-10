@@ -1,5 +1,9 @@
 Revision history for Dist-Zilla-Plugin-MatchManifest
 
+4.01   NOT
+	- Add safety check to ensure MatchManifest comes after MakeMaker
+	  (The new require_builder attribute controls this.)
+
 4.00   December 7, 2010
 	- Write MANIFEST without CRs on Win32
 	- The major version is now 4, because it requires Dist::Zilla 4.

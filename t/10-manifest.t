@@ -39,7 +39,7 @@ sub manifest
 
 my $abortedRE = qr/Aborted because of MANIFEST mismatch/;
 
-my @files = qw( MANIFEST dist.ini lib/DZT/Sample.pm );
+my @files = qw( MANIFEST Makefile.PL dist.ini lib/DZT/Sample.pm );
 
 {
   my ($tzil) = new_tzil;
