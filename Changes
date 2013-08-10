@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-MatchManifest
 
-4.01   NOT
+4.01   August 9, 2013
 	- Add safety check to ensure MatchManifest comes after MakeMaker
 	  (The new require_builder attribute controls this.)
 
