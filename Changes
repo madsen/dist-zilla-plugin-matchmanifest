@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-MatchManifest
 
-4.02   NOT
+4.02   2014-07-19
 	- Update tests to use Test::DZil
 
 4.01   2013-08-09
