@@ -17,7 +17,7 @@ package Dist::Zilla::Plugin::MatchManifest;
 # ABSTRACT: Ensure that MANIFEST is correct
 #---------------------------------------------------------------------
 
-our $VERSION = '4.01';
+our $VERSION = '4.02';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 =head1 SYNOPSIS
@@ -55,8 +55,8 @@ that it can see any F<Makefile.PL> or F<Build.PL> generated.
 
 =cut
 
-use Moose;
-use Moose::Autobox;
+use Moose 0.65;                 # attr fulfills requires
+use Moose::Autobox 0.09;        # flattten
 with 'Dist::Zilla::Role::InstallTool';
 
 use autodie ':io';

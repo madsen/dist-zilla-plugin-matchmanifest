@@ -9,9 +9,9 @@
 use strict;
 use warnings;
 use Test::More 0.88 tests => 14; # done_testing
-use Test::Fatal;
+use Test::Fatal 0.003;
 
-use Dist::Zilla::Tester 'Builder';
+use Test::DZil 'Builder';
 
 sub new_tzil
 {
