@@ -46,6 +46,11 @@ A file I did want to distribute gets left out of the tarball
 
 =back
 
+Dist::Zilla protects against the second problem by using GatherDir
+plugins that aren't restricted by a MANIFEST file.  But the standard
+L<Manifest|Dist::Zilla::Plugin::Manifest> plugin offers no protection
+against the first problem.
+
 By keeping your MANIFEST under source control and using this plugin to
 make sure it's kept up to date, you can protect yourself against both
 problems.
