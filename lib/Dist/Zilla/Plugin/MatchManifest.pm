@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------
 package Dist::Zilla::Plugin::MatchManifest;
 #
-# Copyright 2009 Christopher J. Madsen
+# Copyright 2017 Christopher J. Madsen
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
 # Created: 17 Oct 2009
@@ -17,7 +17,7 @@ package Dist::Zilla::Plugin::MatchManifest;
 # ABSTRACT: Ensure that MANIFEST is correct
 #---------------------------------------------------------------------
 
-our $VERSION = '4.02';
+our $VERSION = '6.000';
 # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
 =head1 SYNOPSIS
@@ -128,7 +128,7 @@ END ERROR
   # We've got a mismatch.  Report it:
   require Text::Diff;
 
-  my $onDisk = $self->zilla->root->file('MANIFEST');
+  my $onDisk = $self->zilla->root->child('MANIFEST');
   my $stat   = $onDisk->stat;
 
   my $diff = Text::Diff::diff(\$manifestFile->content, \$manifest, {
